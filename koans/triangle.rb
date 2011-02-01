@@ -4,9 +4,9 @@
 # (represented by a, b and c) and returns the type of triangle.
 #
 # It returns:
-#   :equilateral  if all sides are equal
-#   :isosceles    if exactly 2 sides are equal
-#   :scalene      if no sides are equal
+#   :equilateral  if all sides are equal // 3
+#   :isosceles    if exactly 2 sides are equal // 2
+#   :scalene      if no sides are equal // 1
 #
 # The tests for this method can be found in
 #   about_triangle_project.rb
@@ -14,7 +14,19 @@
 #   about_triangle_project_2.rb
 #
 def triangle(a, b, c)
-  # WRITE THIS CODE
+  if ((a <= 0) || (b <= 0) || (c <= 0))
+    raise TriangleError
+  elsif ((a + b <= c) || (b + c <= a) || (c + a <= b))
+    raise TriangleError
+  elsif ((a == b) && (b == c) && (a == c)) 
+    return :equilateral
+  elsif ((a == b) || (a == c) || (a == b) || (b == c))
+    return :isosceles
+  elsif ((a != b) && (b != c) && (a != c))
+    return :scalene
+  else 
+    return TriangleError
+  end
 end
 
 # Error class used in part 2.  No need to change this code.

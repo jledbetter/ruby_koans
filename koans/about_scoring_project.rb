@@ -31,6 +31,46 @@ require File.expand_path(File.dirname(__FILE__) + '/edgecase')
 
 def score(dice)
   # You need to write this method
+  total = 0
+  count = Hash.new(0)
+  
+  # count how many occurrences of each number
+  dice.each do |die|
+    count[die] += 1
+  end
+  
+  # A set of three ones is 1000 points and only 5 dice so no 2 sets of 3 ones
+  if (count[1] == 3)
+    total += 1000 
+    count[1] -= 3
+    if (count[1] == 3)
+        total += 1000
+        count[1] -= 3
+    end
+  end
+  
+  # A set of three numbers (other than ones) is worth 100 times the
+  # number. (e.g. three fives is 500 points)
+  # loop over the 6 dice 
+  (1..6).each do |index|
+    if (count[index] >= 3)
+        total += index * 100
+        count[index] -= 3
+    end
+  end  
+  
+  # A one (that is not part of a set of three) is worth 100 points.
+  if (count[1] > 0)
+    total += count[1] * 100
+  end
+  
+  # A five (that is not part of a set of three) is worth 50 points.
+  if (count[5] > 0)
+    total += count[5] * 50
+  end
+  
+  return total
+
 end
 
 class AboutScoringProject < EdgeCase::Koan
